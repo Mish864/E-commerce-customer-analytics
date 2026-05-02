@@ -2,35 +2,53 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+df = pd.read_csv('cleaned_customer_data.csv')
 
-df = pd.read_csv('C:\\Users\\ADMIN\\OneDrive\\Desktop(1)\\ecommerce-customer-analytics\\cleaned_customer_data.csv')
-df['Spend_Per_Item'] = df['Total Spend'] / df['Items Purchased']
-    
-plt.figure(figsize=(16, 10))
-sns.set_style("white") 
+sns.set_theme(style="whitegrid")
 
-    # Visual 1: Violin Plot (Distribution & Density)
-plt.subplot(2, 2, 1)
-sns.violinplot(x='Membership Type', y='Total Spend', data=df, palette="muted")
-plt.title('1. Spending Density by Membership')
-
-    # Visual 2: Heatmap (Regional Satisfaction)
-plt.subplot(2, 2, 2)
-ct = pd.crosstab(df['City'], df['Satisfaction Level'])
-sns.heatmap(ct, annot=True, cmap="YlGnBu", cbar=False)
-plt.title('2. Satisfaction Concentration by City')
-
-    # Visual 3: Bubble Chart (Multidimensional)
-plt.subplot(2, 2, 3)
-sns.scatterplot(data=df, x='Age', y='Total Spend', hue='Satisfaction Level', size='Items Purchased', alpha=0.7)
-plt.title('3. Age vs Spend (Sized by Items)')
-
-    # Visual 4: Correlation Heatmap
-plt.subplot(2, 2, 4)
-corr = df[['Total Spend', 'Items Purchased', 'Average Rating', 'Spend_Per_Item']].corr()
-sns.heatmap(corr, annot=True, cmap="coolwarm")
-plt.title('4. Feature Correlation Matrix')
-
+#The Correlation Heatmap 
+plt.figure(figsize=(12, 8))
+numeric_df = df.select_dtypes(include=['number'])
+correlation = numeric_df.corr()
+sns.heatmap(correlation, annot=True, cmap='RdYlGn', fmt=".2f")
+plt.title('Feature Correlation Matrix')
 plt.tight_layout()
 plt.show()
 
+#Spending Distribution by High Spender Status 
+plt.figure(figsize=(8, 6))
+sns.kdeplot(data=df, x='Total Spend', hue='Is_High_Spender', fill=True)
+plt.title('Distribution of Total Spend: High Spenders vs. Others')
+plt.show()
+
+#Satisfaction vs. Items Purchased
+plt.figure(figsize=(10, 6))
+sns.scatterplot(data=df, x='Items Purchased', y='Satisfaction_Score', 
+                hue='Total Spend', size='Total Spend', palette='viridis')
+plt.title('Satisfaction Score vs. Items Purchased')
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
+
+#Membership Comparison
+df['Membership'] = 'Regular'
+df.loc[df['Membership Type_Gold'] == 1, 'Membership'] = 'Gold'
+df.loc[df['Membership Type_Silver'] == 1, 'Membership'] = 'Silver'
+
+plt.figure(figsize=(8, 6))
+sns.barplot(data=df, x='Membership', y='Total Spend', palette='magma')
+plt.title('Average Spending by Membership Tier')
+plt.show()
+
+#Regional Spending Analysis
+cities = ['City_Houston', 'City_Los Angeles', 'City_Miami', 'City_New York', 'City_San Francisco']
+city_spend = [df[df[city] == 1]['Total Spend'].mean() for city in cities]
+city_names = [city.replace('City_', '') for city in cities]
+
+plt.figure(figsize=(10, 6))
+plt.bar(city_names, city_spend, color='skyblue')
+plt.title('Average Total Spend per City')
+plt.ylabel('Average Spend')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
