@@ -1,0 +1,35 @@
+E-commerce Customer Analytics: Milestone 1 Report
+SDS 2206  Data visualization, analytics and reporting
+group members:
+Sct213-C002-0047/2024. Christine Gatwiri Gitonga 
+Sct213-C002-0058/2024. Millicent Morara Bochaberi 
+Sct213-c002-0146/2024. Victoria patience Wanjiku
+ Sct213-c002-0093/2024. Michelle Muhonja
+
+Project Phase: Milestone 1 - Business Understanding & Data Acquisition
+
+1. Project Background  and  Problem Statement
+In the competitive e-commerce landscape, understanding customer behavior is critical for driving revenue and loyalty. The objective of this project is to analyze customer demographics, purchasing habits, and satisfaction levels to identify the key drivers of spending and build a predictive framework for customer lifetime value.
+
+2. Data Acquisition and Description
+The dataset used for this project consists of 350 unique customer records. The data was acquired from a simulated e-commerce environment reflecting real-world retail variables. Each record contains a mix of demographic, behavioral, and experiential features.
+•	Key features include:
+•	Customer ID: Unique identifier for each shopper.
+•	Demographics: Age, Gender, and City of residence.
+•	Behavioral: Membership Type, Items Purchased, and Total Spend.
+•	Experiential: Satisfaction Level (Rating from 1-5).
+
+3. Quality Assessment
+1.	1. Completeness: Initial inspection verified that the core target variable (Total Spend) was present across all records.
+2. Validity: Checked for logical consistency (e.g., ensuring Age and Items Purchased were positive integers).
+3. Format Check: Identified currency symbols and commas in numeric fields that required stripping during the preprocessing phase.
+
+4. Design Principles Applied
+Problem-First Design: The analytical framework was designed around the business problem (identifying high-value customers) rather than just the available data.
+
+Ethical Compliance: The data acquisition phase adhered to privacy standards by ensuring no personally identifiable information (PII) like names or phone numbers was included in the dataset.
+
+5. Technology Stack
+•	• Language: Python 3.x
+• Development Environment: VS Code
+• Primary Libraries: Pandas for data manipulation and Matplotlib/Seaborn for initial visualization checks.
