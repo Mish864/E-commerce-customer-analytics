@@ -4,6 +4,9 @@ import seaborn as sns
 
 file_path = "C:\\Users\\ADMIN\\OneDrive\\Desktop(1)\\ecommerce-customer-analytics\\E-commerce Customer Behavior - Sheet1.csv"
 df = pd.read_csv(file_path)
+print(df.head())
+print(df.columns)
+print(df.tail())
 
 print("--- DATASET SCHEMA ---")
 print(df.info())
@@ -33,7 +36,7 @@ axes[0, 1].pie(membership_counts, labels=membership_counts.index, autopct='%1.1f
 axes[0, 1].set_title('2. Membership Tier Distribution', fontsize=14)
 
 # Visual 3: Satisfaction Level Frequency (Countplot)
-sns.countplot(x='Satisfaction Level', data=df, palette='viridis',
+sns.countplot(x='Satisfaction Level', data=df, hue='Satisfaction Level', palette='viridis',
               order=['Satisfied', 'Neutral', 'Unsatisfied'], ax=axes[1, 0])
 axes[1, 0].set_title('3. Customer Satisfaction Levels', fontsize=14)
 axes[1, 0].set_ylabel('Number of Customers')
